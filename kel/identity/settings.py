@@ -1,20 +1,18 @@
 import os
+import kel.environ
 
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 BASE_DIR = PACKAGE_ROOT
 
-DEBUG = True
+DEBUG = kel.environ.env("DEBUG", "bool", default=True)
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "dev.db",
-    }
+    "default": kel.environ.db(default="sqlite:///dev.db"),
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = kel.environ.env("ALLOWED_HOSTS", "list", default=[])
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -23,13 +21,13 @@ ALLOWED_HOSTS = []
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = "UTC"
+TIME_ZONE = kel.environ.env("TIME_ZONE", default="UTC")
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-us"
 
-SITE_ID = int(os.environ.get("SITE_ID", 1))
+SITE_ID = kel.environ.env("SITE_ID", "int", default=1)
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -74,7 +72,7 @@ STATICFILES_FINDERS = [
 ]
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = "y0f6(qi26eyf=anu(#xu9uwinlexprpm31m^r+=0ew7$aff4m@"
+SECRET_KEY = kel.environ.env("SECRET_KEY", default=kel.environ.generate_secret_key)
 
 TEMPLATES = [
     {
