@@ -133,6 +133,8 @@ INSTALLED_APPS = [
     "account",
     "pinax.eventlog",
     "pinax.webanalytics",
+    "oidc_provider",
+    "pinax.identity",
 
     # project
     "kel.identity",
